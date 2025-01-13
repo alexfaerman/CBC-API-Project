@@ -54,7 +54,7 @@
      curl -X POST http://localhost:8080/items?ContentSource=A -H "Content-Type: application/json" -d "{\"itemId\": \"A12345\", \"title\": \"Article A\", \"author\": \"John Doe\", \"publishedYear\": 2023, \"typeA\": \"article\"}"
      ```
 
-   - **GET Request:**
+   - **GET Request (UUID is the `id` returned from the previous POST request):**
      ```cmd
      curl http://localhost:8080/items/<UUID>
      ```
