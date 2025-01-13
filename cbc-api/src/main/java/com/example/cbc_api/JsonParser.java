@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.cbc_api;
 
 import java.util.HashMap;
 import java.util.Map;
