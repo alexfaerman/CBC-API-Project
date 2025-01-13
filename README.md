@@ -1,5 +1,3 @@
-# README
-
 ### CBC API Project
 
 ## Instructions to Build, Test, and Run the Application
