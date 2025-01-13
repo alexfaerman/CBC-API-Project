@@ -51,7 +51,7 @@
 
    - **Single Item POST Request:**
      ```cmd
-     curl -X POST http://localhost:8080/items?ContentSource=A      -H "Content-Type: application/json"      -d "{"itemId": "A12345", "title": "Article A", "author": "John Doe", "publishedYear": 2023, "typeA": "article"}"
+     curl -X POST http://localhost:8080/items?ContentSource=A -H "Content-Type: application/json" -d "{\"itemId\": \"A12345\", \"title\": \"Article A\", \"author\": \"John Doe\", \"publishedYear\": 2023, \"typeA\": \"article\"}"
      ```
 
    - **GET Request:**
@@ -61,8 +61,8 @@
 
    - **Bulk POST Request:**
      ```cmd
-     curl -X POST http://localhost:8080/items/bulk      -H "Content-Type: application/json"      -d "{"ContentSourceA": {"itemId": "A12345", "title": "Article A", "author": "John Doe", "publishedYear": 2023, "typeA": "article"}, "ContentSourceB": {"itemNumber": "B67890", "itemTitle": "Story B", "authorName": "Jane Smith", "yearPublished": 2022, "typeB": "story"}, "ContentSourceC": {"item_id": "C54321", "name_of_work": "Video C", "published_by": "Sam Johnson", "year_of_publication": 2024, "typeC": "video"}}"
-     ```
+     curl -X POST http://localhost:8080/items/bulk -H "Content-Type: application/json" -d "{\"ContentSourceA\": {\"itemId\": \"A12345\", \"title\": \"Article A\", \"author\": \"John Doe\", \"publishedYear\": 2023, \"typeA\": \"article\"}, \"ContentSourceB\": {\"itemNumber\": \"B67890\", \"itemTitle\": \"Story B\", \"authorName\": \"Jane Smith\", \"yearPublished\": 2022, \"typeB\": \"story\"}, \"ContentSourceC\": {\"item_id\": \"C54321\", \"name_of_work\": \"Video C\", \"published_by\": \"Sam Johnson\", \"year_of_publication\": 2024, \"typeC\": \"video\"}}"
+```
 
 ---
 
