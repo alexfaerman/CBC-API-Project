@@ -1,16 +1,14 @@
 package com.example.cbc_api.mapper;
 
 import com.example.cbc_api.model.Item;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+@Slf4j
 @Component
 class ContentSourceBMapper implements ContentSourceMapper {
-
-    private static final Logger logger = LoggerFactory.getLogger(ContentSourceBMapper.class);
 
     @Override
     public String getSourceName() {
@@ -23,9 +21,9 @@ class ContentSourceBMapper implements ContentSourceMapper {
         item.setExternalId((String) payload.get("itemNumber"));
         item.setTitle((String) payload.get("itemTitle"));
         item.setAuthor((String) payload.get("authorName"));
-        item.setPublishedYear((int) payload.get("yearPublished"));
+        item.setPublishedYear(((Number) payload.get("yearPublished")).intValue());
         item.setType((String) payload.get("typeB"));
-        logger.debug("Mapping done for ContentSourceB: {}", item);
+        log.debug("Mapping done for ContentSourceB: {}", item);
         return item;
     }
 
@@ -36,7 +34,7 @@ class ContentSourceBMapper implements ContentSourceMapper {
         existingItem.setAuthor((String) payload.get("authorName"));
         existingItem.setPublishedYear((int) payload.get("yearPublished"));
         existingItem.setType((String) payload.get("typeB"));
-        logger.info("Item updated for ContentSourceB: {}", existingItem);
+        log.info("Item updated for ContentSourceB: {}", existingItem);
         return existingItem;
     }
 }

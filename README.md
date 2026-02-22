@@ -1,15 +1,17 @@
 ### CBC API Project
 
-## Instructions to Build, Test, and Run the Application
+## Instructions to Build, Test, and Run the Backend and UI applications
 
 ### Prerequisites
-- Java 21 or higher
-- Maven 3.8.1 or higher
+- Java 25 or higher
+- Maven 3.9 or higher
 - Docker (For PostgreSQL setup)
-- Flyway 11.1 or higher (for managing database migrations)
+- Flyway 12 or higher (for managing database migrations)
 - Postman or curl: For testing API endpoints
+- Node.js 18 or higher (https://nodejs.org/en)
+- npm 8.x or higher (comes with Node.js installation)
 
-### Steps to Build the Application
+### Steps to Build the Backend application
 1. Clone the repository:
    ```cmd
    git clone <repository-url>
@@ -65,6 +67,28 @@
        ```
 
 ---
+
+### Steps to Run the UI Project
+
+1. **Navigate to the Project Directory**:  
+   Change your directory to the UI project folder:
+   ```cmd
+   cd /<repository-folder>/cbc-ui
+
+2. **Install Dependencies**:  
+   ```cmd
+   npm install
+
+3. **Start the UI Development Server**:  
+   ```cmd
+   npm start
+
+---
+**This will launch the application in your default web browser at http://localhost:3000.**
+
+
+---
+
 
 ## Application Design Details
 

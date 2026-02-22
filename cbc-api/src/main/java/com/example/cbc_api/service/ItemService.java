@@ -1,70 +1,64 @@
 package com.example.cbc_api.service;
 
 import com.example.cbc_api.mapper.ContentSourceMapper;
+import com.example.cbc_api.mapper.ContentSourceMapperFactory;
 import com.example.cbc_api.model.Item;
 import com.example.cbc_api.repository.ItemRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@Slf4j
 public class ItemService {
 
     private final ItemRepository itemRepository;
-    private final Map<String, ContentSourceMapper> mappers;
-    private static final Logger logger = LoggerFactory.getLogger(ItemService.class);
+    private final ContentSourceMapperFactory mapperFactory;
 
-    public ItemService(ItemRepository itemRepository, List<ContentSourceMapper> mapperList) {
+    //What Happens When This Constructor Is Called?
+    //Spring Boot detects ItemService as a @Service and creates an instance.
+    //Spring scans for:
+    //A bean of type ItemRepository and injects it.
+    //All beans (@Component) implementing ContentSourceMapper (ContentSourceAMapper, ContentSourceBMapper, etc.).
+    //Spring calls the constructor, passing the dependencies.
+    //The constructor populates the mappers map with all available content source mappers.
+
+    public ItemService(ItemRepository itemRepository, ContentSourceMapperFactory mapperFactory) {
         this.itemRepository = itemRepository;
-        this.mappers = new HashMap<>();
-        for (ContentSourceMapper mapper : mapperList) {
-            mappers.put(mapper.getSourceName(), mapper);
-        }
+        this.mapperFactory = mapperFactory;
     }
 
     public Item getItemById(UUID id) {
-        logger.debug("Getting item from database with id: {}", id);
+        log.debug("Getting item from database with id: {}", id);
         return itemRepository.findById(id).orElseThrow(() -> {
-            logger.warn("Item with id {} not found", id);
-            return new NoSuchElementException("Item not found");
+            log.warn("Item with id {} not found", id);
+            return new NoSuchElementException("Item with id " + id + " not found");
         });
     }
 
     public Item createItem(Map<String, Object> payload, String source) {
-        logger.debug("Creating item for source: {}", source);
-        ContentSourceMapper mapper = validateAndGetMapper(source);
+        log.debug("Creating item for source: {}", source);
+        ContentSourceMapper mapper = mapperFactory.getMapper(source);
         Item item = mapper.mapToItem(payload);
-        logger.info("Item mapped successfully: {}", item);
+        log.info("Item mapped successfully: {}", item);
         return itemRepository.save(item);
     }
 
     public Item updateItem(UUID id, Map<String, Object> payload, String source) {
-        logger.debug("Updating item with id: {} for source: {}", id, source);
-        ContentSourceMapper mapper = validateAndGetMapper(source);
+        log.debug("Updating item with id: {} for source: {}", id, source);
+        ContentSourceMapper mapper = mapperFactory.getMapper(source);
         Item existingItem = getItemById(id);
         Item updatedItem = mapper.updateItem(existingItem, payload);
-        logger.info("Item updated successfully: {}", updatedItem);
+        log.info("Item updated successfully: {}", updatedItem);
         return itemRepository.save(updatedItem);
     }
 
     public void deleteItem(UUID id) {
-        logger.debug("Deleting item from database with id: {}", id);
+        log.debug("Deleting item from database with id: {}", id);
+        getItemById(id); // throws NoSuchElementException → 404 if not found
         itemRepository.deleteById(id);
-        logger.info("Item with id {} deleted successfully", id);
+        log.info("Item with id {} deleted successfully", id);
     }
 
-    public ContentSourceMapper getMapper(String source) {
-        return validateAndGetMapper(source);
-    }
-
-    private ContentSourceMapper validateAndGetMapper(String source) {
-        ContentSourceMapper mapper = mappers.get(source);
-        if (mapper == null) {
-            logger.error("Unsupported content source: {}", source);
-            throw new IllegalArgumentException("Unsupported content source: " + source);
-        }
-        return mapper;
-    }
 }

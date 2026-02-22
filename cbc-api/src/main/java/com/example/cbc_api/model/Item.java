@@ -1,9 +1,8 @@
 package com.example.cbc_api.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,9 +16,12 @@ public class Item {
     @Id
     @GeneratedValue
     private UUID id;
+    @NotBlank
     private String externalId;
+    @NotEmpty
     private String title;
     private String author;
     private int publishedYear;
+    @NotBlank
     private String type;
 }
