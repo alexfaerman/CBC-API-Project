@@ -1,0 +1,1 @@
+ALTER TABLE items ADD CONSTRAINT unique_external_id UNIQUE (external_id);
